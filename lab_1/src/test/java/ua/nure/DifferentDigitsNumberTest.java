@@ -1,6 +1,5 @@
 package ua.nure;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -9,19 +8,16 @@ import java.io.InputStream;
 import java.util.Scanner;
 
 class DifferentDigitsNumberTest {
-  @BeforeEach
-  void resetNumbers() {
-    DifferentDigitsNumber.numbers.clear();
-  }
 
   @Test
   void findNumberConsistingOnlyOfDifferentDigits() {
     String input = "2377\n44\n27\n50\n788";
     InputStream in = new ByteArrayInputStream(input.getBytes());
     Scanner sc = new Scanner(in);
+    DifferentDigitsNumber obj = new DifferentDigitsNumber();
 
-    DifferentDigitsNumber.assignElements(5, sc);
-    Integer res = DifferentDigitsNumber.findDifferentDigitsNumber();
+    obj.assignElements(5, sc);
+    Integer res = obj.findDifferentDigitsNumber();
     assertEquals(27, res);
   }
 
@@ -31,7 +27,8 @@ class DifferentDigitsNumberTest {
     InputStream in = new ByteArrayInputStream(input.getBytes());
     Scanner sc = new Scanner(in);
 
-    int res = DifferentDigitsNumber.getNumberOfElements(sc);
+    DifferentDigitsNumber obj = new DifferentDigitsNumber();
+    int res = obj.getNumberOfElements(sc);
     assertEquals(5, res);
   }
 
@@ -40,8 +37,9 @@ class DifferentDigitsNumberTest {
     String input = "54as\n4\n";
     InputStream in = new ByteArrayInputStream(input.getBytes());
     Scanner sc = new Scanner(in);
+    DifferentDigitsNumber obj = new DifferentDigitsNumber();
 
-    int res = DifferentDigitsNumber.getNumberOfElements(sc);
+    int res = obj.getNumberOfElements(sc);
     assertEquals(4, res);
   }
 
@@ -50,9 +48,10 @@ class DifferentDigitsNumberTest {
     String wrongInput = "34uh\n17\nasd\n134\n0df\n199\n6\n344\nqwer";
     InputStream in = new ByteArrayInputStream(wrongInput.getBytes());
     Scanner sc = new Scanner(in);
+    DifferentDigitsNumber obj = new DifferentDigitsNumber();
 
-    DifferentDigitsNumber.assignElements(5, sc);
-    Integer res = DifferentDigitsNumber.findDifferentDigitsNumber();
+    obj.assignElements(5, sc);
+    Integer res = obj.findDifferentDigitsNumber();
     assertEquals(17, res);
   }
 

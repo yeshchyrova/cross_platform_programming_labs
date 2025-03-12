@@ -1,22 +1,25 @@
 package ua.nure;
 
+import lombok.Getter;
 import java.util.*;
 
 //? Enter n numbers from the console. Find the number consisting only of different digits.
 //? If there are several such numbers, find the first one
 
+@Getter
 public class DifferentDigitsNumber {
-  static final List<Integer> numbers = new ArrayList<>();
+  final List<Integer> numbers = new ArrayList<>();
 
   public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
+    DifferentDigitsNumber obj = new DifferentDigitsNumber();
 
-    int n = getNumberOfElements(sc);
+    int n = obj.getNumberOfElements(sc);
 
     System.out.println("Enter " + n + " numbers:");
-    assignElements(n, sc);
-    System.out.println("Numbers: " + numbers);
-    Integer res = findDifferentDigitsNumber();
+    obj.assignElements(n, sc);
+    System.out.println("Numbers: " + obj.numbers);
+    Integer res = obj.findDifferentDigitsNumber();
 
     if (res == null) System.out.println("No number consisting only of different digits.");
     else System.out.println("The first number consisting only of different digits is " + res);
@@ -26,7 +29,7 @@ public class DifferentDigitsNumber {
     return !input.isEmpty() && input.matches("[1-9]\\d*");
   }
 
-  public static int getNumberOfElements(Scanner sc) {
+  public int getNumberOfElements(Scanner sc) {
     int n = 0;
     boolean isValidN = false;
 
@@ -44,7 +47,7 @@ public class DifferentDigitsNumber {
     return n;
   }
 
-  public static void assignElements(int n, Scanner sc) {
+  public void assignElements(int n, Scanner sc) {
     int k = 0;
     while (k < n) {
       String input = sc.nextLine();
@@ -55,7 +58,7 @@ public class DifferentDigitsNumber {
     }
   }
 
-  public static Integer findDifferentDigitsNumber() {
+  public Integer findDifferentDigitsNumber() {
     for (int number : numbers) {
       if (consistsOfDifferentDigits(number)) return number;
     }
