@@ -4,10 +4,34 @@ This repository contains laboratory assignments for the Cross-Platform Programmi
 
 ## Lab List
 
-### Lab 1: Basic Concepts. Computations
+### Lab 1.1: Basic Concepts. Computations
 
 **Assignment** : Enter n numbers from the console. Find the number consisting only of different digits. If there are several such numbers, find the first one
 
+### Lab 1.2: Basic Concepts. Strings
+
+**Assignment** : Given the root of a binary tree, construct a string consisting of parenthesis and
+integers from a binary tree with the preorder traversal way, and return it. Omit all the empty
+parenthesis pairs that do not affect the one-to-one mapping relationship between the string
+and the original binary tree.
+
+**Example 1:**  
+root = [1,2,3,4]  
+**Result:**  
+"1(2(4))(3)"
+
+**Example 2:**  
+root = [1,2,3,null,4]  
+**Result:**  
+"1(2()(4))(3)"
+
+### Lab 2: OOP
+
+**Assignment** : a) Define the class Complex Number. Create an array/list/set of dimension n from
+complex coordinates. Pass it to a method that will add/multiply its elements.  
+b) Define class Point in space whose coordinates are specified using a Complex
+Number. Create methods for determining the distance between points and the
+distance to the origin.
 
 ## How to Run
 
