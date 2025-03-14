@@ -1,10 +1,12 @@
 package ua.nure;
 
+import lombok.Getter;
 import java.util.*;
 
 //? Enter n numbers from the console. Find the number consisting only of different digits.
 //? If there are several such numbers, find the first one
 
+//@Getter
 public class DifferentDigitsNumber {
   final List<Integer> numbers = new ArrayList<>();
 
