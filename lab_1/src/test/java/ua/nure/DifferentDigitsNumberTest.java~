@@ -24,7 +24,7 @@ class DifferentDigitsNumberTest {
   }
 
   @Test
-  void getNumberOfElementsWithValidInput() {
+  void getValidNumberOfElements() {
     String input = "5\n";
     InputStream in = new ByteArrayInputStream(input.getBytes());
     Scanner sc = new Scanner(in);
@@ -35,7 +35,7 @@ class DifferentDigitsNumberTest {
   }
 
   @Test
-  void getNumberOfElementsWithInvalidInputs() {
+  void getInvalidNumberOfElements() {
     String input = "54as\n4\n";
     InputStream in = new ByteArrayInputStream(input.getBytes());
     Scanner sc = new Scanner(in);
@@ -46,7 +46,7 @@ class DifferentDigitsNumberTest {
   }
 
   @Test
-  void assignElementsWithInvalidInputs() {
+  void invalidNumbersInput() {
     String wrongInput = "34uh\n17\nasd\n134\n0df\n199\n6\n344\n";
     List<Integer> expected = new ArrayList<>(Arrays.asList(17, 134, 199, 6, 344));
     InputStream in = new ByteArrayInputStream(wrongInput.getBytes());
@@ -55,6 +55,8 @@ class DifferentDigitsNumberTest {
 
     obj.assignElements(5, sc);
     assertEquals(expected, obj.numbers);
+//    Integer res = obj.findDifferentDigitsNumber();
+//    assertEquals(17, res);
   }
 
   @ParameterizedTest
