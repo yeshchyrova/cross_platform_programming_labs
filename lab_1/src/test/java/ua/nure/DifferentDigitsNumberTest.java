@@ -2,7 +2,7 @@ package ua.nure;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -58,25 +58,25 @@ class DifferentDigitsNumberTest {
   }
 
   @ParameterizedTest
-  @CsvSource({"234", "2103", "5", "7593"})
+  @ValueSource(strings = {"234", "2103", "5", "7593"})
   void consistsOfDifferentDigits(int n) {
     assertTrue(DifferentDigitsNumber.consistsOfDifferentDigits(n));
   }
 
   @ParameterizedTest
-  @CsvSource({"1232", "5555", "8080", "11"})
+  @ValueSource(strings = {"1232", "5555", "8080", "11"})
   void notConsistOfDifferentDigits(int n) {
     assertFalse(DifferentDigitsNumber.consistsOfDifferentDigits(n));
   }
 
   @ParameterizedTest
-  @CsvSource({"34hj3", "76.", "qwe", "0", "-48"})
+  @ValueSource(strings = {" ", "34hj3", "76.", "qwe", "0", "-48"})
   void isNotValidNumber(String n) {
     assertFalse(DifferentDigitsNumber.isValidNumber(n));
   }
 
   @ParameterizedTest
-  @CsvSource({"123", "9"})
+  @ValueSource(strings = {"123", "9"})
   void isValidNumber(String n) {
     assertTrue(DifferentDigitsNumber.isValidNumber(n));
   }
