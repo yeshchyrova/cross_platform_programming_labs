@@ -10,7 +10,6 @@
   <name>cross_platform_programming_labs</name>
     <modules>
         <module>lab_1</module>
-        <module>lab_2</module>
     </modules>
 
     <properties>
