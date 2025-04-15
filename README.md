@@ -33,6 +33,13 @@ b) Define class Point in space whose coordinates are specified using a Complex
 Number. Create methods for determining the distance between points and the
 distance to the origin.
 
+
+### Lab 3: Concurrency
+
+**Assignment** : *CallCenter*  
+The organization employs several operators. The operator can serve only one client, the rest
+must wait in line. The client can hang up and call back again after a while.
+
 ## How to Run
 
 Clone the repository
