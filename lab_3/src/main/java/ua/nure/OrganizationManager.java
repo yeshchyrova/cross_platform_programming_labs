@@ -17,35 +17,52 @@ public class OrganizationManager {
     }
   }
 
-  public void handleClient(Client client) throws InterruptedException {
-    Operator operator;
+  public boolean tryHandleClient(Client client) throws InterruptedException {
     lock.lock();
-
-    try {
-      while ((operator = getAvailableOperator()) == null) {
-        System.out.printf("Client %s, %d is waiting in line...%n", client.getName(),
-                          client.getId());
-        condition.await();
-      }
-      operator.occupy();
-    } finally {
+    Operator operator = getAvailableOperator();
+    if (operator == null) {
       lock.unlock();
+      return false;
     }
-
-    int spentTimeOnClient = ThreadLocalRandom.current().nextInt(1000, 5000);
-    Thread.sleep(spentTimeOnClient);
-
+    operator.occupy();
+    lock.unlock();
+    Thread.sleep(ThreadLocalRandom.current().nextInt(1000, 5000));
     lock.lock();
-    try {
-      operator.release();
-      condition.signalAll();
-    } finally {
-      lock.unlock();
-    }
-    System.out.printf("Client %s, %d has finished talking on the phone...%n", client.getName(),
-                      client.getId());
-
+    operator.release();
+    condition.signalAll();
+    lock.unlock();
+    return true;
   }
+
+//  public void handleClient(Client client) throws InterruptedException {
+//    Operator operator;
+//    lock.lock();
+//
+//    try {
+//      while ((operator = getAvailableOperator()) == null) {
+//        System.out.printf("Client %s, %d is waiting in line...%n", client.getName(),
+//                          client.getId());
+//        condition.await();
+//      }
+//      operator.occupy();
+//    } finally {
+//      lock.unlock();
+//    }
+//
+//    int spentTimeOnClient = ThreadLocalRandom.current().nextInt(1000, 5000);
+//    Thread.sleep(spentTimeOnClient);
+//
+//    lock.lock();
+//    try {
+//      operator.release();
+//      condition.signalAll();
+//    } finally {
+//      lock.unlock();
+//    }
+//    System.out.printf("Client %s, %d has finished talking on the phone...%n", client.getName(),
+//                      client.getId());
+//
+//  }
 
   private Operator getAvailableOperator() {
     for (Operator operator : operators) {
@@ -53,4 +70,5 @@ public class OrganizationManager {
     }
     return null;
   }
+
 }
