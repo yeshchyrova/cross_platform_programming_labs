@@ -7,5 +7,5 @@ import lombok.Getter;
 @Getter
 public class Call {
   private final int duration;
-  private final int clientId;
+  private final String clientId;
 }

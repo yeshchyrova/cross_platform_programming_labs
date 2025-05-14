@@ -14,7 +14,7 @@ public class CallCenter {
   private final ExecutorService executorService;
   private final List<CallAgent> agents;
   private final List<BlockingQueue<Call>> callQueues;
-  private volatile boolean isRunning = true;
+//  private volatile boolean isRunning = true;
   private static Logger logger = LoggerFactory.getLogger(CallCenter.class);
 
   public CallCenter(int numberOfAgents) {
@@ -55,7 +55,7 @@ public class CallCenter {
   }
 
   public void shutdown() {
-    isRunning = false;
+//    isRunning = false;
     for (CallAgent agent : agents) {
       agent.release();
     }
