@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Random;
 
 public class Organization {
-  private static Logger logger = LoggerFactory.getLogger(Organization.class);
+  private static final Logger logger = LoggerFactory.getLogger(Organization.class);
 
 
   public static void main(String[] args) {
