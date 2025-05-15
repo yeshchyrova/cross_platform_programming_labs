@@ -1,23 +1,51 @@
 ### *Call Agent*
 
 <span style="color:#f487c6">**BlockingQueue**</span> - інтерфейс для вирішення проблеми producer-consumer, тобто коли
-потік намагається додати елемент
-до черги, яка вже повністю заповнена, або навпаки прочитати/забрати елемент з порожньої черги. BlockingQueue can be
-shared between threads without any explicit synchronization.
+потік намагається додати елемент до черги, яка вже повністю заповнена, або навпаки прочитати/забрати елемент з порожньої
+черги. BlockingQueue can be shared between threads without any explicit synchronization. Most BlockingQueue
+implementations do not permit null elements. Attempting to add a null will throw a NullPointerException.м
 
-<span style="color:yellow">*add()*</span> - повертає true якщо додавання успішне, в іншому випадку видикає
-IllegalStateException  
-<span style="color:yellow">*put()*</span> - додає елемент до черги, або за необхідністю чекає поки звільниться місце і
-тоді вже додає  
+<span style="color:yellow">*add()*</span> - повертає true якщо додавання успішне, в іншому випадку викидає
+IllegalStateException.  
+<span style="color:yellow">*put()*</span> - додає елемент до черги, або за необхідністю чекає(блокує програму) поки
+звільниться місце і тоді вже додає.  
 <span style="color:yellow">*offer()*</span> - повертає true якщо додавання було успішне. в іншому випадку поверне
-false  
+false.  
 <span style="color:yellow">*offer(timeout)*</span> - намагається додати елемент до черги та чекає певний час, якщо всі
-слоти зайняті
+слоти зайняті.
 
 <span style="color:yellow">*take()*</span> - чекає на перший елемент у черзі та забирає його. якщо черга порожня -
-операція блокується та очікує поки буде доступний елемент  
+операція блокується та очікує поки буде доступний елемент.  
 <span style="color:yellow">*poll(timeout)*</span> - так само як і take(), але чекає певний час і повертає null, якщо
-елемент таки не з'являється
+елемент таки не з'являється.  
+<span style="color:yellow">*remove()*</span> - викине помилку якщо черга порожня.
+
+<span style="color:#4dd0e1">**new ArrayBlockingQueue<>(10)**</span> - ArrayBlockingQueue is a bounded, blocking queue
+backed by an array.
+
+<span style="color:#4dd0e1">**LinkedBlockingQueue**</span> - Unlike ArrayBlockingQueue, LinkedBlockingQueue can be
+optionally bounded. If you don't specify a capacity in the constructor, it's effectively unbounded (capacity is
+Integer.MAX_VALUE). This means put() operations might rarely block due to fullness, but if it grows very large, it can
+consume significant memory. Uses linked nodes internally, similar to LinkedList.
+
+<span style="color:#4dd0e1">**PriorityBlockingQueue**</span> - This queue is unbounded, meaning put() operations will
+never block due to capacity constraints (only OutOfMemoryError can occur if memory runs out). Elements are ordered
+according to their natural ordering (if they implement Comparable) or by a Comparator provided at construction time. It
+does not follow FIFO ordering. take() operations will block if the queue is empty.
+
+<span style="color:#4dd0e1">**DelayQueue**</span> - This queue is also unbounded. Elements added to this queue must
+implement the Delayed interface. An element can only be taken from the queue when its delay has expired. The take()
+method will block until an element's delay has expired. No null elements.
+
+<span style="color:#4dd0e1">**SynchronousQueue**</span> - This is a very special type of BlockingQueue with a capacity
+of zero. It doesn't store elements internally. Each put() operation must wait for a corresponding take() operation, and
+vice versa. It acts as a direct hand-off mechanism between a producer and a consumer.
+
+<span style="color:#4dd0e1">**LinkedTransferQueue**</span> - It's primarily designed as an unbounded queue, but it
+offers a transfer() method which blocks until an element is consumed by a consumer. This provides a direct hand-off
+similar to SynchronousQueue but within the context of a potentially buffered queue. Non-blocking tryTransfer(): Allows a
+producer to attempt to hand off an element without waiting.
+
 ---
 <span style="color:#f487c6">**Thread.sleep()**</span> - останавливает работу/выполнение потока на какое-то время и по
 его истечению возобновляет
@@ -65,7 +93,7 @@ executed, but no new tasks will be accepted.
   politely tells the ExecutorService to stop accepting new work and to let the existing work finish.
 
 
-- Once all the current tasks are completed, the factory can then be fully closed down
+- Once all the current tasks are completed, the factory can then be fully closed down.
 
 <span style="color:yellow">*shutdownNow()*</span> - Attempts to stop all actively executing tasks, halts the processing
 of waiting tasks, and returns a list of the tasks that were awaiting execution.
@@ -87,11 +115,11 @@ interrupted, whichever happens first.
 
 <span style="color:yellow">*\<T> invokeAll(java.util.Collection<? extends java.util.concurrent.Callable\<T>>
 tasks)*</span> - Executes the given tasks, returning a list of Futures holding their status and results when all
-complete
+complete.
 
 <span style="color:yellow">*\<T> invokeAny(java.util.Collection<? extends java.util.concurrent.Callable\<T>>
 tasks)*</span> - Executes the given tasks, returning the result of one that has completed successfully (i.e., without
-throwing an exception)
+throwing an exception).
 ---
 <span style="color:#f487c6">**volatile**</span> - variable modifier ensuring that its value is always read from and
 written to main memory, not the CPU cache. This guarantees visibility of changes across threads, addressing potential
@@ -115,31 +143,41 @@ logger instance that is specifically associated with the CallCenter class.
 <span style="color:#f487c6">**Executors.newFixedThreadPool**</span>
 
 <span style="color:yellow">***Executors***</span> - Utility class in Java's java.util.concurrent package that provides
-factory methods for creating various kinds of ExecutorService instances
+factory methods for creating various kinds of ExecutorService instances.
 
+<span style="color:yellow">**newFixedThreadPool(int nThreads)**</span> - Creates an ExecutorService that uses a fixed
+number of threads. If all threads are busy, new tasks are queued until a thread becomes available. If a thread dies due
+to an exception, a new thread is created to maintain the specified pool size.
 
-<span style="color:yellow">**newFixedThreadPool(int nThreads)**</span> - 
+<span style="color:yellow">**newCachedThreadPool()**</span> - Creates an ExecutorService that can dynamically create new
+threads as needed, but will reuse previously created threads when they are available. Threads that remain idle for a
+certain period (typically 60 seconds) are terminated and removed from the pool. This pool has no upper bound on the
+number of threads it can create, which can be a concern if the system is under heavy load.
 
-<span style="color:yellow">**newCachedThreadPool()**</span> - 
+<span style="color:yellow">**newSingleThreadExecutor()**</span> - Creates an ExecutorService that uses a single worker
+thread operating off an unbounded queue. Tasks are executed sequentially in the order they are submitted. If the single
+thread dies due to an exception, a new thread is created to replace it.
 
-<span style="color:yellow">**newSingleThreadExecutor()**</span> - 
+<span style="color:yellow">**newScheduledThreadPool(int corePoolSize)**</span> - Creates a ScheduledExecutorService that
+can schedule commands to run after a given delay or to execute periodically. It maintains a fixed-size thread pool for
+executing these scheduled tasks.
 
-<span style="color:yellow">**newScheduledThreadPool(int corePoolSize)**</span> - 
+<span style="color:yellow">**newSingleThreadScheduledExecutor()**</span> - Creates a ScheduledExecutorService with a
+single thread that can schedule commands to run after a given delay or to execute periodically. Scheduled tasks are
+guaranteed to execute sequentially.
 
-<span style="color:yellow">**newSingleThreadScheduledExecutor()**</span> - 
-
-<span style="color:yellow">**newWorkStealingPool()**</span> - 
-
----
-<span style="color:#f487c6">**new ArrayBlockingQueue<>(10)**</span> -
-
-<span style="color:#f487c6">**callQueues.get(minQueueIndex).offer(call)**</span> -
+<span style="color:yellow">**newWorkStealingPool()**</span> - Creates a work-stealing thread pool that uses multiple
+queues (typically one per thread) to reduce contention. Worker threads that run out of tasks in their own queue can "
+steal" tasks from the queues of other idle threads. The parallelism level is equal to the number of available
+processors. You can also specify the desired parallelism level with newWorkStealingPool(int parallelism).
 
 ### *Organization*
 
-<span style="color:#f487c6">**System.currentTimeMillis()**</span> -
+<span style="color:#f487c6">**System.currentTimeMillis()**</span> - This is a static method of the System class. It
+returns a long value. currentTimeMillis() is the current time expressed in milliseconds since the "epoch."
 
-<span style="color:#f487c6">**random.nextInt(10)**</span> - 
+<span style="color:#f487c6">**random.nextInt(10)**</span> - The bound parameter specifies the exclusive upper limit for
+the random integer to be generated. The possible outcomes are: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
 
 
 
